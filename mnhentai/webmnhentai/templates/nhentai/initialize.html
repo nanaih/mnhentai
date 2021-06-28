@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>mnhentai</title>
+
+        <style>
+            #defaut_body {
+                text-align: center;
+                color: rgb(208, 204, 198);
+                background-color: rgb(10, 11, 11);
+            }
+            .path_text_box{
+                font-size: xx-large;
+                color: rgb(218, 218, 218);
+                background-color: gray;
+                border-color: white;
+                border-radius: 5px;
+                caret-color: white;
+                width: 700px;
+            }
+            .exec_button {
+                font-size: large;
+                background-color: rgb(178, 15, 52);
+                border: none;
+                color: white;
+                padding: 12px 6px;
+                margin: 6px;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            form {
+                display: inline-block;
+                font-size: xx-large;
+            }
+        </style>
+
+    </head>
+    <body id="defaut_body">
+        <form action="{% url 'nhentai:initdb' %}" method="post">
+            {% csrf_token %}
+            <legend><h1> Insert the <b> ABSOLUTE </b> path to the folder that contains all your doujinshis </h1></legend>
+            <input class="path_text_box" type="text" id="doujins_path" name="doujins_path"><br>
+            <input class="exec_button" type="submit" value="Generate Database">
+        </form>
+    </body>
+</html>
