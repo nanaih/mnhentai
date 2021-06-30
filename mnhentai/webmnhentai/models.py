@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Parody(models.Model):
-    title = models.CharField(max_length=256)
+    name = models.CharField(max_length=256)
 
 
 class Character(models.Model):
