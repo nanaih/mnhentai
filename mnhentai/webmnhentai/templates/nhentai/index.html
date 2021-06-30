@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>mnhentai</title>
+        <style>
+            #defaut_body {
+                text-align: center;
+                color: rgb(208, 204, 198);
+                background-color: rgb(10, 11, 11);
+                font-family: sans-serif;
+            }
+            #middle{
+                margin: 0;
+            }
+            .search_bar{
+                font-size: xx-large;
+                color: rgb(218, 218, 218);
+                background-color: gray;
+                border-color: white;
+                border-radius: 5px;
+                caret-color: white;
+                width: 700px;
+            }
+            .search_button {
+                font-size: large;
+                background-color: rgb(178, 15, 52);
+                border: none;
+                color: white;
+                padding: 18px 32px;
+                margin: 6px;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            form {
+                display: inline-block;
+                font-size: xx-large;
+            }
+            .doujin_image_con {
+                margin: 5pt;
+            }
+            .image{
+                min-width: 250px;
+                max-width: 20%;
+            }
+        </style>
+
+    </head>
+    <body id='defaut_body'>
+        <div>        
+            <form action="{% url 'nhentai:search' %}" method="post">
+                {% csrf_token %}
+                <input class="search_bar" type="text" id="search_bar" name="keywords"><br>
+                <input class="search_button" type="submit" value="Search">
+            </form>
+        </div>
+        <div>
+            <div id='left_side'>
+
+            </div>
+            <div id='middle'>
+                {% if latest_doujin_list %}
+                    <p style="size: 16pt; font-size: 16pt;"> Recent Doujins </p>
+                    {% for doujin in latest_doujin_list %}
+                        <span class='doujin_image_con'>
+                            <a href="{% url 'nhentai:details' doujin.1.id %}">
+                            <img class="image" src="{{ doujin.0 }}" href="{% url 'nhentai:details' doujin.1.id %}">
+                            </a>
+                        </span>
+                    {% endfor %}
+                        
+                {% else %}
+                    <p>No doujinshis in database. Have you imported them yet?</p> <br>
+                    <p>Go to <a href="{% url 'nhentai:init' %}"> this link</a> to populate the database and start using the site.</p>
+                {% endif %}
+            </div>
+            <div id='right_side'>
+                
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
