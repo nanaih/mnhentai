@@ -1,6 +1,5 @@
 from django.http import HttpResponse, Http404
 from django.template import loader
-from django.shortcuts import render
 from django.utils.encoding import smart_str
 
 from .models import Doujinshi
@@ -23,14 +22,22 @@ def details(request, doujin_id):
         doujin = Doujinshi.objects.get(pk=doujin_id)
     except Doujinshi.DoesNotExist:
         raise Http404("doujin does not exist")
-    # todo pegar todas as tags e mandar num dict
+    tags = get_doujin_tags_str(doujin.id)
+    doujao = {'tags': tags, 'title': doujin.title, 'coverlink': get_first_pic_url(doujin)}
     template = loader.get_template('nhentai/details.html')
-    return HttpResponse(template.render(dict(title=doujin.title), request))
+    return HttpResponse(template.render(dict(doujin=doujao), request))
+
 
 
 
 def search(request):
     return HttpResponse("You're searching for \"%s\"." % request.POST['keywords'])
+
+
+def get_tag(request, tag):
+    template = loader.get_template('nhentai/get_tag.html')
+    data = {}
+    return HttpResponse(template.render(data, request))
 
 
 

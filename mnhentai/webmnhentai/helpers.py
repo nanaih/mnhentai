@@ -22,3 +22,10 @@ def path_to_link(url, path):
 
 def get_first_pic_url(doujin):
     return path_to_link(URL_IMAGES_SERVER, get_first_pic_path(doujin))
+
+
+def get_doujin_tags_str(doujin_id):
+    tags = Tags.objects.filter(doujinshi=doujin_id)
+    tag_str = [tag.tag.name for tag in tags]
+    tag_str.sort()
+    return tag_str

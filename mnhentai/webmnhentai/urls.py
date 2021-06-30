@@ -11,4 +11,5 @@ urlpatterns = [
     path('initialize/', views.init, name='init'),
     path('initdb/', views.init_db, name='initdb'),
     path('search/', views.search, name='search'),
+    path('tag/<str:tag>/', views.get_tag, name='tag'),
 ]
