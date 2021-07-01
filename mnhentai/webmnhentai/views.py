@@ -34,11 +34,19 @@ def search(request):
     return HttpResponse("You're searching for \"%s\"." % request.POST['keywords'])
 
 
-def get_tag(request, tag):
-    template = loader.get_template('nhentai/get_tag.html')
-    data = {}
+def get_tags(request):
+    all_tags = get_all_tags_str()
+    data = dict(tags=all_tags)
+    template = loader.get_template('nhentai/all_tags.html')
     return HttpResponse(template.render(data, request))
 
+
+def doujins_with_tag(request, tag):
+    doujaos = get_doujins_with_tag(tag)
+    doujins = [[get_first_pic_url(doujao), doujao] for doujao in doujaos]
+    data = dict(doujins=doujins, tag=tag)
+    template = loader.get_template('nhentai/get_doujins_with_tag.html')
+    return HttpResponse(template.render(data, request))
 
 
 def init(request):

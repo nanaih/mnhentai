@@ -10,20 +10,9 @@
                 background-color: rgb(10, 11, 11);
                 font-family: sans-serif;
             }
-            #cover {
-                width: 70%;
-            }
-            #cover_con {
-                margin-left: 10px;
-                margin-right: 10px;
-                width: 50%;
-            }
-            #sumary {
-                display: inline-flex;
-                flex-direction: row;
-            }
-            #tags_con {
-                margin-left: 10px;
+            #all_tags {
+                display: table;
+                margin: 30px 80px;
             }
             .search_bar{
                 font-size: xx-large;
@@ -72,15 +61,13 @@
                 <input class="search_button" type="submit" value="Search">
             </form>
         </div>
-        <div id='sumary'>
-            <span id='cover_con'>
-                <img id='cover' src="{{ doujin.coverlink }}">
-            </span>
-            <span id='tags_con'>
-                <div> <h1>{{ doujin.title }}</h1> </div>
-                <div>
-                    <b>Tags: </b>
-                    {% for tag in doujin.tags %}
+        <div>
+            <span>
+                <div style="margin-top: 10px;">
+                    <b style="font-size: 30px;">All Tags: </b> <br>
+                </div>
+                <div id='all_tags'>
+                    {% for tag in tags %}
                         <span class='doujin_tag_con'>
                             <a style="text-decoration: none; color: inherit" href="{% url 'nhentai:tag' tag %}">
                             {{ tag }}
@@ -88,9 +75,7 @@
                         </span>
                     {% endfor %}
                 </div>
-            
             </span>
         </div>
-        
     </body>
 </html>

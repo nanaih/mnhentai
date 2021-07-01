@@ -10,20 +10,9 @@
                 background-color: rgb(10, 11, 11);
                 font-family: sans-serif;
             }
-            #cover {
-                width: 70%;
-            }
-            #cover_con {
-                margin-left: 10px;
-                margin-right: 10px;
-                width: 50%;
-            }
-            #sumary {
-                display: inline-flex;
+            #results {
+                display:table;
                 flex-direction: row;
-            }
-            #tags_con {
-                margin-left: 10px;
             }
             .search_bar{
                 font-size: xx-large;
@@ -48,18 +37,12 @@
                 display: inline-block;
                 font-size: xx-large;
             }
-            .doujin_tag_con {
-                color: #fff;
-                font-size: 1em;
-                vertical-align: middle;
-                display: inline-flex;
-                margin: 2px;
-                flex-direction: row;
-                justify-content: center;
-                padding: 2px 6px;
-                align-items: center;
-                background-color: rgb(58, 63, 65);
-                border-radius: 4px;
+            .doujin_image_con {
+                margin: 5pt;
+            }
+            .image{
+                min-width: 250px;
+                max-width: 20%;
             }
         </style>
     </head>
@@ -72,25 +55,17 @@
                 <input class="search_button" type="submit" value="Search">
             </form>
         </div>
-        <div id='sumary'>
-            <span id='cover_con'>
-                <img id='cover' src="{{ doujin.coverlink }}">
-            </span>
-            <span id='tags_con'>
-                <div> <h1>{{ doujin.title }}</h1> </div>
-                <div>
-                    <b>Tags: </b>
-                    {% for tag in doujin.tags %}
-                        <span class='doujin_tag_con'>
-                            <a style="text-decoration: none; color: inherit" href="{% url 'nhentai:tag' tag %}">
-                            {{ tag }}
-                            </a>
-                        </span>
-                    {% endfor %}
-                </div>
-            
-            </span>
+        <div style="margin-bottom: 10px;">
+            <b style="font-size: 30px;"> Tag: {{tag}} </b>
         </div>
-        
+        <div id='results'>
+            {% for doujin in doujins %}
+                <span class='doujin_image_con'>
+                    <a href="{% url 'nhentai:details' doujin.1.id %}">
+                    <img class="image" src="{{ doujin.0 }}" href="{% url 'nhentai:details' doujin.1.id %}">
+                    </a>
+                </span>
+            {% endfor %}
+        </div>
     </body>
 </html>

@@ -29,3 +29,17 @@ def get_doujin_tags_str(doujin_id):
     tag_str = [tag.tag.name for tag in tags]
     tag_str.sort()
     return tag_str
+
+
+def get_all_tags_str():
+    all_tags = Tag.objects.all()
+    all_tags_str = [tag.name for tag in all_tags]
+    all_tags_str.sort()
+    return all_tags_str
+
+
+def get_doujins_with_tag(tag_str):
+    tag_obj = Tag.objects.get(name=tag_str)
+    tags_obj = Tags.objects.filter(tag=tag_obj.id)
+    doujins = [tag.doujinshi for tag in tags_obj]
+    return doujins
