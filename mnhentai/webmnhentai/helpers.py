@@ -3,7 +3,7 @@ from .models import *
 from .db_builder import remove_escape_char
 from socket import gethostname, gethostbyname
 from image_server import IMAGES_PORT
-
+from re import match
 
 URL_IMAGES_SERVER = f'http://{gethostbyname(gethostname())}:{IMAGES_PORT}/'
 
@@ -23,6 +23,19 @@ def path_to_link(url, path):
 
 def get_first_pic_url(doujin):
     return path_to_link(URL_IMAGES_SERVER, get_first_pic_path(doujin))
+
+
+def get_all_img_links(doujin_id):
+    doujin_obj = Doujinshi.objects.get(pk=doujin_id)
+    if os.path.exists(doujin_obj.dir_path):
+        _paths = os.listdir(doujin_obj.dir_path)
+        img_paths = []
+        for _path in _paths:
+            if match(r'\d+(\.jpg|\.png|\.jpeg)', _path):
+                img_paths.append(_path)
+        img_paths.sort()
+        img_paths_escaped = [path_to_link(URL_IMAGES_SERVER, remove_escape_char(os.path.join(doujin_obj.dir_path, p))) for p in img_paths]
+        return img_paths_escaped
 
 
 def get_doujin_tags_str(doujin_id):

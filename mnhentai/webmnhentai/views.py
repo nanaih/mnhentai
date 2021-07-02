@@ -6,8 +6,6 @@ from .models import Doujinshi
 from .db_builder import generate_db, remove_escape_char
 from .helpers import *
 
-# run this inside the folder used in /initialize/
-# python -m http.server 6969
 
 def index(request):
     latest_doujin_list = Doujinshi.objects.order_by('-upload_date')[:10]
@@ -28,6 +26,10 @@ def details(request, doujin_id):
     return HttpResponse(template.render(dict(doujin=doujao), request))
 
 
+def reader(request, doujin_id, page_number):
+    data = dict(img_links=get_all_img_links(doujin_id))
+    template = loader.get_template('nhentai/reader.html')
+    return HttpResponse(template.render(data, request))
 
 
 def search(request):
