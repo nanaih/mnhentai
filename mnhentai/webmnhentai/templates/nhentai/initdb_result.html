@@ -3,11 +3,18 @@
     <head>
         <meta charset="utf-8">
         <title>mnhentai</title>
+        <style>
+            #defaut_body {
+                text-align: center;
+                color: rgb(208, 204, 198);
+                background-color: rgb(10, 11, 11);
+                font-family: sans-serif;
+            }
+        </style>
     </head>
-    <body>
-        {% for line in result %}
-            {{ line }}
-            <br>
-        {% endfor %}
+    <body id='defaut_body'>
+        Number of folders inside specified directory: {{all_folders}} <br>
+        Number of doujins imported: {{doujins_added}} <br>
+        Go to <a href="{% url 'nhentai:index' %}">index</a> to see the results
     </body>
 </html>

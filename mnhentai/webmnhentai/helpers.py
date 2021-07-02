@@ -1,10 +1,11 @@
 import os
 from .models import *
 from .db_builder import remove_escape_char
-from socket import gethostname, gethostbyname 
+from socket import gethostname, gethostbyname
+from image_server import IMAGES_PORT
 
 
-URL_IMAGES_SERVER = f'http://{gethostbyname(gethostname())}:6969/'
+URL_IMAGES_SERVER = f'http://{gethostbyname(gethostname())}:{IMAGES_PORT}/'
 
 
 def get_first_pic_path(doujin_obj):
