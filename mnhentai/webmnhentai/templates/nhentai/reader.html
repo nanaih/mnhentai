@@ -73,7 +73,7 @@
 
         <script>
             const pages = Array.from(document.querySelectorAll('img.image-item'));
-            let currentPage = 0;
+            let currentPage = {{ page_number }} - 1;
             
             function changePage(pageNum) {
                 const previous = pages[currentPage];
@@ -100,7 +100,7 @@
                         ].join('\u200a/\u200a');
             }
             
-            changePage(0);
+            changePage(currentPage);
             
             document.getElementById('image-container').onclick = event => {
                 const width = document.getElementById('image-container').clientWidth;

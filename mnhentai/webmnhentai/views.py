@@ -9,7 +9,7 @@ from .helpers import *
 
 def index(request):
     latest_doujin_list = Doujinshi.objects.order_by('-upload_date')[:10]
-    data = [[get_first_pic_url(doujao), doujao] for doujao in latest_doujin_list]
+    data = [[get_first_pic_url(doujao), doujao.id] for doujao in latest_doujin_list]
     data = dict(latest_doujin_list=data)
     template = loader.get_template('nhentai/index.html')
     return HttpResponse(template.render(data, request))
@@ -21,13 +21,22 @@ def details(request, doujin_id):
     except Doujinshi.DoesNotExist:
         raise Http404("doujin does not exist")
     tags = get_doujin_tags_str(doujin.id)
-    doujao = {'tags': tags, 'title': doujin.title, 'coverlink': get_first_pic_url(doujin)}
+    doujao = {  'tags': tags, 
+                'title': doujin.title, 
+                'coverlink': get_first_pic_url(doujin),
+                'id': doujin.id,
+                'gallery_list': get_all_img_links(doujin.id)
+            }
     template = loader.get_template('nhentai/details.html')
     return HttpResponse(template.render(dict(doujin=doujao), request))
 
 
 def reader(request, doujin_id, page_number):
-    data = dict(img_links=get_all_img_links(doujin_id))
+    img_links = get_all_img_links(doujin_id)
+    if page_number <= 0 or page_number > len(img_links):
+        page_number = 1
+    data = dict(img_links=img_links,
+                page_number=page_number)
     template = loader.get_template('nhentai/reader.html')
     return HttpResponse(template.render(data, request))
 
@@ -54,6 +63,7 @@ def doujins_with_tag(request, tag):
 def init(request):
     template = loader.get_template('nhentai/initialize.html')
     return HttpResponse(template.render({}, request))
+
 
 def init_db(request):
     data = generate_db(remove_escape_char(str(request.POST['doujins_path'])))

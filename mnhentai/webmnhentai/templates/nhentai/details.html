@@ -25,6 +25,10 @@
             #tags_con {
                 margin-left: 10px;
             }
+            #gallery{
+                margin-left: 10px;
+                margin-right: 10px;
+            }
             .search_bar{
                 font-size: xx-large;
                 color: rgb(218, 218, 218);
@@ -61,6 +65,13 @@
                 background-color: rgb(58, 63, 65);
                 border-radius: 4px;
             }
+            .doujin_image_con {
+                margin: 5pt;
+            }
+            .image{
+                min-width: 250px;
+                max-width: 20%;
+            }
         </style>
     </head>
 
@@ -90,6 +101,16 @@
                 </div>
             
             </span>
+        </div>
+        <div id='gallery'>
+            <p style="size: 26pt; font-size: 26pt;"> Gallery </p>
+                {% for doujin_img in doujin.gallery_list %}
+                    <span class='doujin_image_con'>
+                        <a href="{% url 'nhentai:reader' doujin.id forloop.counter %}">
+                        <img class="image" src="{{ doujin_img }}" href="{% url 'nhentai:reader' doujin.id forloop.counter %}">
+                        </a>
+                    </span>
+                {% endfor %}
         </div>
         
     </body>
