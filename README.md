@@ -5,11 +5,28 @@
 Running a (lazilly put together) local web server to deliver your doujins in web format.
 
 
+## Functionalities
+Search: TODO  
+Filter by tag: Done  
+Filter by artist: TODO  
+Filter by parody: TODO  
+Filter by character: TODO  
+Filter by group: TODO  
+Doujinshi details: Done
+Temp folder: TODO
 
 ## Setup
-### Create database:
-Inside the first ``mnhentai`` directory run:  
+
+### Python:
+Create a venv, activate it and run:  
 ```bash
+python -m pip install -r requirements.txt
+```
+
+### Create database:
+Run:  
+```bash
+cd mnhentai &&
 python manage.py makemigrations &&
 python manage.py migrate &&
 python manage.py runserver 0.0.0.0:8080
@@ -30,13 +47,13 @@ DOUJINS_PATH = 'H:/nhentai/downloads/'
 Once all is setup you just have to:  
 ```bash
 python manage.py runserver 0.0.0.0:8080 &
-python run_image_server.py &
+python image_server.py &
 ```
 And access http://INSERT_YOUR_LOCAL_IP:8080/nhentai/
 
 
 ## Disclaimer
 
-Do NOT use this as a "production" server. It was meant to be used in local network only.
-Do NOT use this if you are in dangerous local network.
-I'm a firmware guy, and have no idea what I did in the frontend/backend. :D
+Do NOT use this as a "production" server. It was meant to be used in local network only.  
+Do NOT use this if you are in dangerous local network.  
+I'm a firmware guy, and have no idea what I did in the frontend/backend. :D  
