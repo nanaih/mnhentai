@@ -16,8 +16,8 @@ GENERIC_ENTRY_FIELDS = (
 DT_FORMAT = "%Y-%m-%dT%H:%M:%S.%f%z"
 
 
-def remove_escape_char(path_escaped):
-    return (((path_escaped.encode('unicode_escape')).replace(b'\\', b'/')).decode('utf-8')).replace('//', '/')
+def remove_escape_char(path_escaped: str):
+    return (((path_escaped.encode('utf-8')).replace(b'\\', b'/')).decode('utf-8')).replace('//', '/')
 
 
 def get_id(url_str):
@@ -42,12 +42,11 @@ def get_language(lang_list):
     return lang_list[0]
 
 
-def create_generic_entry(doujin_dict, key, model_class):
+def create_generic_entry(doujin_dict: dict, key: str, model_class: models.Model):
     if key in doujin_dict:
         for entry_name in doujin_dict[key]:
             try:
-                if model_class.objects.get(name=entry_name):
-                    continue
+                model_class.objects.get(name=entry_name)
             except model_class.DoesNotExist:
                 model_object = model_class(name=entry_name)
                 model_object.save()
@@ -58,7 +57,7 @@ def create_missing_entries(doujin):
         create_generic_entry(doujin, entry[1], entry[0])
 
 
-def make_doujin_links(doujin, doujin_path):
+def make_doujin_links(doujin, doujin_path: str):
     n_id = 0
     if 'URL' in doujin:
         n_id = get_id(doujin['URL'])
