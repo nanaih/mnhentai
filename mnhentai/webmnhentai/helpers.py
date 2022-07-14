@@ -6,6 +6,7 @@ from image_server import IMAGES_PORT
 from re import match
 
 URL_IMAGES_SERVER = f'http://{gethostbyname(gethostname())}:{IMAGES_PORT}/'
+NOT_FOUND_IMG = "TODO"
 
 
 def get_first_pic_path(doujin_obj):
@@ -16,9 +17,11 @@ def get_first_pic_path(doujin_obj):
     return '.'
 
 
-def path_to_link(url, path):
+def path_to_link(url: str , path: str):
     p = path.split('/')
-    return url + '/' + p[-2] + '/' + p[-1]
+    if len(p) >= 2:
+        return url + '/' + p[-2] + '/' + p[-1]
+    return url + NOT_FOUND_IMG
 
 
 def get_first_pic_url(doujin):
